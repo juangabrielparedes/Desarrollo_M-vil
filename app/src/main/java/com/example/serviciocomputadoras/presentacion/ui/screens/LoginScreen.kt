@@ -1,5 +1,6 @@
 package com.example.serviciocomputadoras.presentacion.ui.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -9,12 +10,14 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.serviciocomputadoras.presentacion.viewmodel.AuthViewModel
+import com.example.serviciocomputadoras.R
 
 @Composable
 fun LoginScreen(
@@ -43,6 +46,8 @@ fun LoginScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+        Image(painter = painterResource(R.drawable.avatar),
+            contentDescription = "Foto avatar")
         Text(
             text = "Iniciar Sesión",
             style = MaterialTheme.typography.headlineLarge,

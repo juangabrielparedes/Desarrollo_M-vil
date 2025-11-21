@@ -11,6 +11,7 @@ sealed class AuthResult {
 
 class AuthRepository {
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val userRepository = UserRepository()
 
     fun getCurrentUser(): FirebaseUser? = auth.currentUser
 
@@ -23,9 +24,14 @@ class AuthRepository {
         }
     }
 
-    suspend fun register(email: String, password: String): AuthResult {
+    suspend fun register(email: String, password: String, nombre: String): AuthResult {
         return try {
             val result = auth.createUserWithEmailAndPassword(email, password).await()
+            val uid = result.user?.uid ?: return AuthResult.Error("Error al obtener UID")
+
+            //  NUEVO: Crear documento en Firestore
+            userRepository.crearUsuario(uid, email, nombre)
+
             AuthResult.Success(result.user)
         } catch (e: Exception) {
             AuthResult.Error(e.message ?: "Error desconocido al registrar")
